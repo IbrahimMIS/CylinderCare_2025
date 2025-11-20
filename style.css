@@ -72,6 +72,27 @@ ul li {
   background: linear-gradient(to right, white, grey);
 }
 
+/* Keep the hamburger icon color consistent */
+.navbar-toggler {
+    border: 1px solid rgba(255, 255, 255, 0.5); /* remove border if you want */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Remove hover/focus/active effects */
+.navbar-toggler:hover,
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+
+
+
 /* Navbar */
 .navbar .nav-link {
   color: red !important;
