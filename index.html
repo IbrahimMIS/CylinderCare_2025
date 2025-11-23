@@ -100,7 +100,7 @@
 
 
 <div class="index-quote-card">
-  <h2>Your Trusted Cylinder Care Partner</h2>
+  <h2>Your Trusted Cylinder Care</h2>
   <p>
     At <strong>CylinderCare</strong>, we make sure you never run out of gas, whether at home or at your business. 
     Our team delivers cylinders quickly and safely, provides maintenance and emergency services, and ensures 
@@ -114,6 +114,7 @@
 
 <div class="index-quote-buttons text-center">
   <h1>If You Wanna Know More About Our Services</h1>
+
   <button class="btn-index-quote" id="openServicesBtn">
     Explore Our Services
   </button>
@@ -137,7 +138,7 @@
                 </p>
 
                 <h2>Mr. Abdul Basit</h2>
-                <p>Investment Banker</p>
+                <p>Investment Advisor</p>
             </div>
             <!-- 2nd Card -->
             <div class="client-row">
@@ -186,11 +187,47 @@
 
 
 <script>
-  document.getElementById('openServicesBtn').addEventListener('click', function() {
-    // Trigger a click on the navbar dropdown toggle
-    document.getElementById('navbarDropdownMenuLink').click();
-  });
+  (function () {
+    const openBtn = document.getElementById('openServicesBtn');
+    const dropdownToggle = document.getElementById('navbarDropdownMenuLink');
+    const collapseEl = document.getElementById('navbarNavDropdown');
+
+    openBtn.addEventListener('click', function () {
+      // If navbar is already expanded (desktop or mobile open), just show dropdown
+      const isCollapsedOpen = collapseEl.classList.contains('show');
+
+      const showDropdown = () => {
+        // Use Bootstrap Dropdown API to reliably show the dropdown
+        const ddInstance = bootstrap.Dropdown.getOrCreateInstance(dropdownToggle);
+        // If dropdown already open, toggle will close it; ensure it's shown
+        // There's no show() method for Dropdown in BS5, so call toggle only if not open.
+        if (!dropdownToggle.classList.contains('show')) {
+          ddInstance.toggle();
+        }
+        // Scroll so user sees the navbar/dropdown (smooth)
+        dropdownToggle.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+
+      if (isCollapsedOpen) {
+        // collapse is already open -> show dropdown immediately
+        showDropdown();
+      } else {
+        // collapse is closed on mobile -> open it first, then show dropdown
+        const collapseInstance = bootstrap.Collapse.getOrCreateInstance(collapseEl);
+        // Listen once for the shown event
+        const onShown = function () {
+          collapseEl.removeEventListener('shown.bs.collapse', onShown);
+          // small timeout to ensure layout settled (helps on some devices)
+          setTimeout(showDropdown, 50);
+        };
+        collapseEl.addEventListener('shown.bs.collapse', onShown);
+        // Show the collapsed navbar
+        collapseInstance.show();
+      }
+    });
+  })();
 </script>
+
 
 
 </body>
